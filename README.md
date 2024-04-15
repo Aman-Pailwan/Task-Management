@@ -10,7 +10,7 @@ The Task Manager API is a simple yet powerful application built using Spring Boo
 2. [Features](#2-features)
 3. [Setup](#3-setup)
 4. [Endpoints](#4-endpoints)
-5. [Documentation](#5-documentation)
+5. [Frontend](#5-Frontend)
 
 ## 1. Overview
 
@@ -78,6 +78,21 @@ PUT /api/v1/tasks/{id}: Updates an existing task.
 DELETE /api/v1/tasks/{id}: Deletes a task by ID.
 ```
 
-## 5. Documentation
-For detailed API documentation, refer to the Swagger documentation provided in the docs directory.
+## 5. Frontend
+
+The frontend of the Task Manager application is located in the project directory. It consists of HTML, CSS, and JavaScript files that provide a user-friendly interface for interacting with the Task Manager API.
+
+To run the frontend:
+
+Navigate to the frontend directory in your project.
+Open the index.html file in a web browser.
+Remember to update the API fetch requests in the frontend code to use http://localhost:8080 as the base URL when running the application locally.
+```
+// Example API fetch request in JavaScript
+fetch('http://localhost:8080/api/v1/tasks')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error fetching tasks:', error));
+```
+
 
