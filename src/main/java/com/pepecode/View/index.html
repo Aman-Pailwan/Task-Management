@@ -164,7 +164,7 @@
         let currentTaskName;
 
         function listTasks() {
-            fetch('http://65.0.104.95:8080/api/v1/tasks')
+            fetch('http://localhost:8080/api/v1/tasks')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -201,7 +201,7 @@
 
         function openDetailModal(taskId) {
             currentTaskId = taskId;
-            fetch(`http://65.0.104.95:8080/api/v1/tasks/${taskId}`)
+            fetch(`http://localhost:8080/api/v1/tasks/${taskId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -250,7 +250,7 @@
                 closeEditModal();
                 return;
             }
-            fetch(`http://65.0.104.95:8080/api/v1/tasks/${currentTaskId}`, {
+            fetch(`http://localhost:8080/api/v1/tasks/${currentTaskId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -268,7 +268,7 @@
         });
 
         function deleteTask() {
-            fetch(`http://65.0.104.95:8080/api/v1/tasks/${currentTaskId}`, {
+            fetch(`http://localhost:8080/api/v1/tasks/${currentTaskId}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -285,7 +285,7 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const taskName = formData.get('taskName');
-            fetch('http://65.0.104.95:8080/api/v1/tasks', {
+            fetch('http://localhost:8080/api/v1/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
