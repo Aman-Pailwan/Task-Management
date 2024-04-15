@@ -69,7 +69,7 @@ $ java -jar target/Tasks-0.0.1-SNAPSHOT.jar
 
 ## The application should now be running at http://localhost:8080
 
-##4. Endpoints
+## 4. Endpoints
 
 GET /api/v1/tasks: Retrieves a list of all tasks.
 GET /api/v1/tasks/{id}: Retrieves details of a specific task by ID.
@@ -77,6 +77,6 @@ POST /api/v1/tasks: Creates a new task.
 PUT /api/v1/tasks/{id}: Updates an existing task.
 DELETE /api/v1/tasks/{id}: Deletes a task by ID.
 
-##5. Documentation
+## 5. Documentation
 For detailed API documentation, refer to the Swagger documentation provided in the docs directory.
 
