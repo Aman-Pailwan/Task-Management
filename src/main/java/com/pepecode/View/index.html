@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
     <style>
-        /* Global styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,11 +14,10 @@
 
         h1 {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
             color: #333;
         }
 
-        /* Button styles */
         .button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -28,13 +26,34 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 10px;
         }
 
         .button:hover {
             background-color: #0056b3;
         }
 
-        /* Modal styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -54,7 +73,7 @@
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 80%;
-            max-width: 600px;
+            max-width: 400px;
         }
 
         .close {
@@ -71,28 +90,6 @@
             cursor: pointer;
         }
 
-        /* Table styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        /* Form styles */
         label {
             display: block;
             margin-bottom: 5px;
@@ -120,17 +117,13 @@
 </head>
 <body>
     <h1>Task Manager</h1>
-
-    <!-- Buttons for CRUD operations -->
-    <div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center;">
         <button class="button" onclick="listTasks()">List Tasks</button>
         <button class="button" onclick="openAddModal()">Add Task</button>
     </div>
 
-    <!-- Container to display task data -->
     <table id="taskList"></table>
 
-    <!-- Modal for adding a task -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeAddModal()">&times;</span>
@@ -138,12 +131,11 @@
             <form id="addForm">
                 <label for="addTaskName">Task Name:</label>
                 <input type="text" id="addTaskName" name="taskName" required>
-                <button type="submit" class="button" style="margin-top: 10px;">Add Task</button>
+                <button type="submit" class="button">Add Task</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal for displaying task details -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeDetailModal()">&times;</span>
@@ -154,7 +146,6 @@
         </div>
     </div>
 
-    <!-- Modal for editing a task -->
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeEditModal()">&times;</span>
@@ -162,7 +153,7 @@
             <form id="editForm">
                 <label for="editTaskName">New Task Name:</label>
                 <input type="text" id="editTaskName" name="taskName" required>
-                <button type="submit" class="button" style="margin-top: 10px;">Save Changes</button>
+                <button type="submit" class="button">Save Changes</button>
             </form>
             <div id="editMessage" class="message"></div>
         </div>
@@ -172,10 +163,8 @@
         let currentTaskId;
         let currentTaskName;
 
-        // Function to list tasks
         function listTasks() {
-            // Fetch tasks from the backend API
-            fetch('http://localhost:8080/api/v1/tasks')
+            fetch('http://65.0.104.95:8080/api/v1/tasks')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -183,9 +172,8 @@
                     return response.json();
                 })
                 .then(tasks => {
-                    // Display tasks
                     const taskListElement = document.getElementById('taskList');
-                    taskListElement.innerHTML = ''; // Clear previous content
+                    taskListElement.innerHTML = ''; 
                     const tableHeader = `<tr><th>Task ID</th><th>Task Name</th><th>Action</th></tr>`;
                     taskListElement.insertAdjacentHTML('beforeend', tableHeader);
                     tasks.forEach(task => {
@@ -201,23 +189,19 @@
                 .catch(error => console.error('Error fetching tasks:', error.message));
         }
 
-        // Function to open the add modal
         function openAddModal() {
             const modal = document.getElementById('addModal');
             modal.style.display = 'block';
         }
 
-        // Function to close the add modal
         function closeAddModal() {
             const modal = document.getElementById('addModal');
             modal.style.display = 'none';
         }
 
-        // Function to open the detail modal
         function openDetailModal(taskId) {
             currentTaskId = taskId;
-            // Fetch task details from the backend API
-            fetch(`http://localhost:8080/api/v1/tasks/${taskId}`)
+            fetch(`http://65.0.104.95:8080/api/v1/tasks/${taskId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -225,7 +209,6 @@
                     return response.json();
                 })
                 .then(task => {
-                    // Display task details
                     const taskDetailsElement = document.getElementById('taskDetails');
                     taskDetailsElement.innerHTML = `
                         <p><strong>Task ID:</strong> ${task.id}</p>
@@ -237,32 +220,26 @@
                 .catch(error => console.error('Error fetching task details:', error.message));
         }
 
-        // Function to close the detail modal
         function closeDetailModal() {
             const modal = document.getElementById('detailModal');
             modal.style.display = 'none';
         }
 
-        // Function to open the edit modal
         function openEditModal() {
             const modal = document.getElementById('editModal');
             modal.style.display = 'block';
-            // Set the current task name in the edit form
             document.getElementById('editTaskName').value = currentTaskName;
         }
 
-        // Function to close the edit modal
         function closeEditModal() {
             const modal = document.getElementById('editModal');
             modal.style.display = 'none';
         }
 
-        // Function to edit a task
         document.getElementById('editForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const newTaskName = formData.get('taskName');
-            // Check if the task name has changed
             if (newTaskName === currentTaskName) {
                 const editMessage = document.getElementById('editMessage');
                 editMessage.textContent = 'No changes made.';
@@ -273,8 +250,7 @@
                 closeEditModal();
                 return;
             }
-            // Perform API call to edit task
-            fetch(`http://localhost:8080/api/v1/tasks/${currentTaskId}`, {
+            fetch(`http://65.0.104.95:8080/api/v1/tasks/${currentTaskId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -291,10 +267,8 @@
             .catch(error => console.error('Error editing task:', error.message));
         });
 
-        // Function to delete a task
         function deleteTask() {
-            // Perform API call to delete task
-            fetch(`http://localhost:8080/api/v1/tasks/${currentTaskId}`, {
+            fetch(`http://65.0.104.95:8080/api/v1/tasks/${currentTaskId}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -307,13 +281,11 @@
             .catch(error => console.error('Error deleting task:', error.message));
         }
 
-        // Function to submit the add form
         document.getElementById('addForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const taskName = formData.get('taskName');
-            // Perform API call to add task
-            fetch('http://localhost:8080/api/v1/tasks', {
+            fetch('http://65.0.104.95:8080/api/v1/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
